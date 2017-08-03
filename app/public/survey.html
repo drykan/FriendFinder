@@ -157,8 +157,8 @@
 
 	</div>
 
-	<!-- Modal -->
-	<div id="resultsModal" class="modal fade" role="dialog" style="display: none;">
+	<!-- Greyhound Modal -->
+	<div id="resultsModal" class="dogModal modal fade" role="dialog" style="display: none;">
 	  <div class="modal-dialog">
 
 	    <!-- Modal content-->
@@ -178,6 +178,28 @@
                 <li>Home Acclimated: No</li>
             </ul>
 	        <img id="matchImg" src="https://static.wixstatic.com/media/16cea4_bd4d9a4422a84378901970cde2686a5a~mv2.jpg/v1/fill/w_355,h_464,al_c,q_80,usm_0.66_1.00_0.01/16cea4_bd4d9a4422a84378901970cde2686a5a~mv2.webp" alt="">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+    
+    <!-- Plant Modal-->
+    <div id="resultsModal" class="plantModal modal fade" role="dialog" style="display: none;">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">×</button>
+	        <h2 class="modal-title"><strong>Best Match</strong></h2>
+	      </div>
+	      <div class="modal-body">
+              <h2 id="matchName">Maybe You Should Get a Plant Instead...</h2>
+	        <img id="matchImg" src="http://www.ikea.com/PIAimages/0121010_PE277826_S5.JPG" alt="Get a plant..." style="max-width: 200px;">
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -222,6 +244,17 @@
 
 		if (validateForm() == true)
 		{
+            var val1 = $("#q1").val();
+            var val2 = $("#q2").val();
+            var val3 = $("#q3").val();
+            var val4 = $("#q4").val();
+            var val5 = $("#q5").val();
+            var val6 = $("#q6").val();
+            var val7 = $("#q7").val();
+            var val8 = $("#q8").val();
+            var val9 = $("#q9").val();
+            var val10 = $("#q10").val();
+            
 	    	var userData = {
 	    		name: $("#name").val(),
 	    		scores: [
@@ -234,16 +267,23 @@
                     $("#q7").val(),
                     $("#q8").val(),
                     $("#q9").val(),
-                    $("#q10").val(),
+                    $("#q10").val()
                 ]
 	    	}
+            var userTotal = +val1 + +val2 + +val3 + +val4 + +val5 + +val6 + +val7 + +val8 + +val9 + +val10;
+            
 
 	    	var currentURL = window.location.origin;
 
 	    	$.post(currentURL + "/api/friends", userData, function(data){
 
-	    		$("#matchName").text(data.name);
-		    	$("#resultsModal").modal('toggle');
+                if (userTotal >= 40) {
+                    $("#matchName").html(data.name);
+                    $(".dogModal").modal('toggle');
+                    console.log(userTotal);
+                } else {
+                    $(".plantModal").modal('toggle');
+                }
 	    	});
 		}
 		else
